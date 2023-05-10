@@ -11,6 +11,7 @@ from tests import test_team_site_url, test_client_credentials
 ctx = ClientContext(test_team_site_url).with_credentials(test_client_credentials)
 folder_url = "/".join([test_team_site_url, "Shared Documents"])
 assignment = UserRoleAssignment(RoleType.Guest, "jdoe@contoso.com")
-result = DocumentSharingManager.update_document_sharing_info(ctx, folder_url, [assignment],
-                                                             send_server_managed_notification=True).execute_query()
+result = DocumentSharingManager.update_document_sharing_info(
+    ctx, folder_url, [assignment], send_server_managed_notification=True
+).execute_query()
 print(json.dumps(result.value.to_json(), indent=4))

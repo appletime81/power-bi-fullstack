@@ -17,7 +17,9 @@ def retrieve_custom_view_items(context):
     """
     :type context: ClientContext
     """
-    view = context.web.lists.get_by_title("Contacts_Large").views.get_by_title("All contacts")
+    view = context.web.lists.get_by_title("Contacts_Large").views.get_by_title(
+        "All contacts"
+    )
     items = view.get_items().top(5).execute_query()
     for item in items:  # type: ListItem
         print(item.id)
@@ -25,4 +27,4 @@ def retrieve_custom_view_items(context):
 
 ctx = ClientContext(test_team_site_url).with_credentials(test_client_credentials)
 retrieve_default_view_items(ctx)
-#retrieve_custom_view_items(ctx)
+# retrieve_custom_view_items(ctx)

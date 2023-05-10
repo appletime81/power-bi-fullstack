@@ -14,6 +14,3 @@ if len(items) == 0:
 field_name = "DateColumn"
 field_value = date.today()
 items[0].set_property(field_name, field_value.isoformat()).update().execute_query()
-
-
-

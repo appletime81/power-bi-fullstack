@@ -8,6 +8,8 @@ source_folder_url = "/sites/team/Shared Documents/Archive/2020"
 target_folder_url = "/sites/team/Shared Documents/Archive/2020/01"
 
 source_folder = ctx.web.get_folder_by_server_relative_url(source_folder_url)
-target_folder = source_folder.copy_to_using_path(target_folder_url, True).get().execute_query()
+target_folder = (
+    source_folder.copy_to_using_path(target_folder_url, True).get().execute_query()
+)
 # MoveCopyUtil.copy_folder(ctx, source_folder_url, target_folder_url).execute_query()
-#print(f"File copied into {target_folder.serverRelativeUrl}")
+# print(f"File copied into {target_folder.serverRelativeUrl}")

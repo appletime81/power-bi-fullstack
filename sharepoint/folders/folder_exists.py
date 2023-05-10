@@ -8,7 +8,12 @@ ctx = ClientContext(test_team_site_url).with_credentials(test_client_credentials
 
 # Approach 1: explicitly specify Exists property
 folder_rel_url = "/sites/team/Shared Documents/2022"
-folder = ctx.web.get_folder_by_server_relative_url(folder_rel_url).select("Exists").get().execute_query()
+folder = (
+    ctx.web.get_folder_by_server_relative_url(folder_rel_url)
+    .select("Exists")
+    .get()
+    .execute_query()
+)
 if folder.exists:
     print("Folder is found")
 else:
@@ -29,7 +34,3 @@ def try_get_folder(url):
 folder = try_get_folder(folder_rel_url)
 if folder is None:
     print("Folder not found")
-
-
-
-

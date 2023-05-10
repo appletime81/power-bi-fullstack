@@ -25,7 +25,7 @@ def get_password_hash(password):
 
 @router.get("/", response_class=HTMLResponse)
 async def loginPage(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
+    return templates.TemplateResponse("test.html", {"request": request})
 
 
 @router.post("/")

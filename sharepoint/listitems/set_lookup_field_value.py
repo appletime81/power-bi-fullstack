@@ -20,5 +20,3 @@ me = ctx.web.current_user
 # items[0].set_property("AssignedTo", FieldUserValue(me.id)).update().execute_query()
 # items[0].set_property("AssignedTo", FieldUserValue.from_user(me)).update().execute_query()
 print("Item has been updated")
-
-

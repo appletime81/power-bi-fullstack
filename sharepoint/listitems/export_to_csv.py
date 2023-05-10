@@ -17,7 +17,7 @@ if len(list_items) == 0:
 
 # 2.export to a file
 path = os.path.join(tempfile.mkdtemp(), "Contacts.csv")
-with open(path, 'w') as fh:
+with open(path, "w") as fh:
     fields = list_items[0].properties.keys()
     w = csv.DictWriter(fh, fields)
     w.writeheader()

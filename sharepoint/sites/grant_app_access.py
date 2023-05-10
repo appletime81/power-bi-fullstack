@@ -23,7 +23,11 @@ def assign_site_access(site_url, roles=None, clear_existing=False):
 
     client = GraphClient(acquire_token_by_client_credentials)
     target_site = client.sites.get_by_url(site_url).get().execute_query()
-    apps = client.applications.filter(f"appId eq '{test_client_credentials.clientId}'").get().execute_query()
+    apps = (
+        client.applications.filter(f"appId eq '{test_client_credentials.clientId}'")
+        .get()
+        .execute_query()
+    )
     if len(apps) == 0:
         sys.exit("App not found")
 
@@ -34,18 +38,26 @@ def assign_site_access(site_url, roles=None, clear_existing=False):
         client.execute_query()
 
     if roles:
-        identities = [{
-            "application": {
-                "id": apps[0].properties["appId"],
-                "displayName": apps[0].properties["displayName"]
+        identities = [
+            {
+                "application": {
+                    "id": apps[0].properties["appId"],
+                    "displayName": apps[0].properties["displayName"],
+                }
             }
-        }]
-        target_site.permissions.add(roles=roles, grantedToIdentities=identities).execute_query()
+        ]
+        target_site.permissions.add(
+            roles=roles, grantedToIdentities=identities
+        ).execute_query()
 
 
 def verify_site_access():
     ctx = ClientContext(test_team_site_url).with_credentials(test_client_credentials)
-    site = ctx.web.site_users.get_by_email(sample_user_principal_name_alt).get_personal_site().execute_query()
+    site = (
+        ctx.web.site_users.get_by_email(sample_user_principal_name_alt)
+        .get_personal_site()
+        .execute_query()
+    )
     print(site.url)
 
 

@@ -18,5 +18,3 @@ task_prefix = str(randint(0, 10000))
 # item_to_update.set_property("Country", tax_field_value).update().execute_query()
 item_to_update.set_property("Title", f"Task {task_prefix}").update().execute_query()
 print("Item has been updated")
-
-

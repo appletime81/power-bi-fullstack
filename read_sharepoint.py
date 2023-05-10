@@ -82,9 +82,7 @@ def download_attachment():
     ctx.load(items, ["Attachments"])
     ctx.execute_query()
     for item in items:
-        if item.properties[
-            "Attachments"
-        ]:
+        if item.properties["Attachments"]:
             print(item.properties["Attachments"])
             # 1. determine whether ListItem contains attachments
             # 2. Explicitly load attachments for ListItem
@@ -98,6 +96,7 @@ def download_attachment():
                     f"{attachment_file.server_relative_url} has been downloaded into {download_file_name}"
                 )
 
+
 def read_attachment():
     user_credentials = UserCredential(USER_NAME, PASSWORD)
     ctx = ClientContext(
@@ -106,11 +105,16 @@ def read_attachment():
 
     list_title = "LeaveForm"
     source_list = ctx.web.lists.get_by_title(list_title)
-    items = source_list.items.select(["Attachments"]).expand(["AttachmentFiles"]).get().execute_query()
+    items = (
+        source_list.items.select(["Attachments"])
+        .expand(["AttachmentFiles"])
+        .get()
+        .execute_query()
+    )
     for item in items:
         for attachment_file in item.attachment_files:
             download_file_name = f"./attachment/{attachment_file.file_name}"
-            with open(download_file_name, 'wb') as fh:
+            with open(download_file_name, "wb") as fh:
                 attachment_file.download(fh).execute_query()
             print(f"{attachment_file.server_relative_url}")
 

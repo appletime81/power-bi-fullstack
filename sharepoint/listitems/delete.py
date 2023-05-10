@@ -18,7 +18,3 @@ target_list.get_item_by_id(item_id).recycle().execute_query()
 # Option 2: Permanently remove a list item
 item_id = items[1].id
 target_item = target_list.get_item_by_id(item_id).delete_object().execute_query()
-
-
-
-

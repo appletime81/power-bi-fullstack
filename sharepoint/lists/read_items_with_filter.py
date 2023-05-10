@@ -11,7 +11,9 @@ site_pages = ctx.web.lists.get_by_title(list_title)
 from_datetime = datetime.datetime(2022, 1, 20, 0, 0)
 filter_text = "Created gt datetime'{0}'".format(from_datetime.isoformat())
 include_fields = ["Created", "EncodedAbsUrl"]
-items = site_pages.items.filter(filter_text).select(include_fields).get().execute_query()
+items = (
+    site_pages.items.filter(filter_text).select(include_fields).get().execute_query()
+)
 print("Loaded items count: {0}".format(len(items)))
 for index, item in enumerate(items):  # type: int, ListItem
-    print("{0}: {1}".format(index, item.properties['EncodedAbsUrl']))
+    print("{0}: {1}".format(index, item.properties["EncodedAbsUrl"]))

@@ -8,7 +8,7 @@ ctx = ClientContext(test_team_site_url).with_credentials(test_client_credentials
 
 def is_custom_list(list_object):
     xml = ElementTree.fromstring(list_object.properties["SchemaXml"])
-    scope_id = xml.attrib['ScopeId']
+    scope_id = xml.attrib["ScopeId"]
     return True
 
 

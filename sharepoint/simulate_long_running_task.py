@@ -17,7 +17,7 @@ def print_server_settings(context):
 
 ctx = ClientContext(test_site_url).with_credentials(test_client_credentials)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     start_time = time.time()
     while True:
         print(f" %s : Processing site..." % int(time.time() - start_time))

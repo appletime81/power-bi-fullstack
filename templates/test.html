@@ -1,0 +1,28 @@
+<html>
+<head>
+    <title>Ice Cream Picker</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css"/>
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+
+</head>
+<body>
+<py-config>
+    files = ["./on_click.py"]
+</py-config>
+<h1 id="Title">Test Page</h1>
+
+<!-- add btn -->
+<button id="add-btn" py-click="add_p()">Add</button>
+<p id="para"></p>
+<py-script>
+    from js import document
+    def add_p(*ags, **kws):
+        # append a new p tag
+        p = document.createElement("p")
+        p.innerHTML = "new p tag"
+        document.getElementById("para").appendChild(p)
+</py-script>
+
+</body>
+</html>

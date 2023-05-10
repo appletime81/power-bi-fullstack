@@ -6,7 +6,7 @@ from tests import test_user_credentials, test_team_site_url
 ctx = ClientContext(test_team_site_url).with_credentials(test_user_credentials)
 
 path = "../../data/report #123.csv"
-with open(path, 'rb') as content_file:
+with open(path, "rb") as content_file:
     file_content = content_file.read()
 
 list_title = "Documents"

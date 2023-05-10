@@ -14,7 +14,7 @@ sharing_messages = {
     3: "An organization access link with edit permissions to an object",
     4: "An anonymous access link with view permissions to an object",
     5: "An anonymous access link with edit permissions to an object",
-    6: "A tokenized sharing link where properties can change without affecting link URL"
+    6: "A tokenized sharing link where properties can change without affecting link URL",
 }
 
 file_url = "/sites/team/Shared Documents/SharePoint User Guide.docx"
@@ -34,4 +34,4 @@ target_file.unshare_link(SharingLinkKind.AnonymousView).execute_query()
 
 # Get a file sharing info
 info = target_file.get_sharing_information().execute_query()
-print("AnonymousViewLink:", info.properties.get('AnonymousViewLink'))
+print("AnonymousViewLink:", info.properties.get("AnonymousViewLink"))
