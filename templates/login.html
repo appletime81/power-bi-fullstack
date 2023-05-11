@@ -87,14 +87,14 @@
         password = document.getElementById("password").value
         data = {"email": email, "password": password}
         data = json.dumps(data)
-        print(data)
+
         # post request
         req = XMLHttpRequest.new()
         req.open("POST", post_url, False)
         req.setRequestHeader("Content-Type", "application/json")
         req.send(data)
-        print(req.status)
-        print(req.responseText)
+        if req.status == 200:
+            document.location.href = "http://172.22.16.45:8000/hkleaveapp/report"
 
 </py-script>
 

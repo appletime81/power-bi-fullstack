@@ -6,6 +6,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from fastapi import Depends, HTTPException, status, APIRouter, Request, Response, Form
+from starlette.responses import RedirectResponse
 
 SECRET_KEY = "eb750ede284955f0ea34e05a0dc364db05535873eec546596e3467d9423ae089"
 ALGORITHM = "HS256"
@@ -29,7 +30,16 @@ async def loginPage(request: Request):
 
 
 @router.post("/")
-async def loginFunc(request: Request):
+async def loginFunc(request: Request, response_class=HTMLResponse):
     user_info = await request.json()
+    # redirect to report page
+    response = RedirectResponse(url="/hkleaveapp/report", status_code=status.HTTP_302_FOUND)
+    return response
 
-    return {"h": "h"}
+
+@router.get("/report", response_class=HTMLResponse)
+async def reportPage(request: Request):
+    return templates.TemplateResponse("report.html", {"request": request})
+
+
+
