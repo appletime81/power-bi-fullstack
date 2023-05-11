@@ -25,11 +25,11 @@ def get_password_hash(password):
 
 @router.get("/", response_class=HTMLResponse)
 async def loginPage(request: Request):
-    return templates.TemplateResponse("test.html", {"request": request})
+    return templates.TemplateResponse("login.html", {"request": request})
 
 
 @router.post("/")
 async def loginFunc(request: Request):
-    user_info = dict(await request.form())
+    user_info = await request.json()
     pprint(user_info)
     return {"h": "h"}
