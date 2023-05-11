@@ -6,9 +6,9 @@ access_token = "eyJ0eXAiOiJKV1QiLCJub25jZSI6IjBCUEhMX2VSMFZERjlqVnNmZHNLdFlpeWI4
 url = "https://graph.microsoft.com/v1.0/me/sendMail"
 headers = {
     "Authorization": f"Bearer {access_token}",
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
 }
-HTML="""
+HTML = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,24 +65,15 @@ HTML="""
 </html>
 """
 
-print('-' * 25 + ' HTML Content ' + '-' * 25)
+print("-" * 25 + " HTML Content " + "-" * 25)
 print(HTML)
-print('-' * 25 + ' HTML Content ' + '-' * 25)
+print("-" * 25 + " HTML Content " + "-" * 25)
 
 payload = {
     "message": {
         "subject": "Meet for lunch?",
-        "body": {
-            "contentType": "HTML",
-            "content": HTML
-        },
-        "toRecipients": [
-            {
-                "emailAddress": {
-                    "address": "ylc@cht.com.tw"
-                }
-            }
-        ]
+        "body": {"contentType": "HTML", "content": HTML},
+        "toRecipients": [{"emailAddress": {"address": "ylc@cht.com.tw"}}],
     }
 }
 

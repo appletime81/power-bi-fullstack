@@ -31,5 +31,5 @@ async def loginPage(request: Request):
 @router.post("/")
 async def loginFunc(request: Request):
     user_info = await request.json()
-    pprint(user_info)
+
     return {"h": "h"}

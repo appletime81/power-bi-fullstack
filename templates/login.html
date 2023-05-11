@@ -79,6 +79,7 @@
     from js import document, XMLHttpRequest
 
     submit_btn = document.getElementById("login-btn")
+    post_url = "http://172.22.16.45:8000/hkleaveapp/"
 
     def on_click(*ags, **kws):
         # post request (email and password)
@@ -88,9 +89,8 @@
         data = json.dumps(data)
         print(data)
         # post request
-        url = "http://172.24.156.51:8000/hkleaveapp/"
         req = XMLHttpRequest.new()
-        req.open("POST", url, False)
+        req.open("POST", post_url, False)
         req.setRequestHeader("Content-Type", "application/json")
         req.send(data)
         print(req.status)
