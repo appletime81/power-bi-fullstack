@@ -9,28 +9,29 @@
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css"/>
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <link rel="icon" href="https://web-eshop.cdn.hinet.net/eshop/img/favicon.ico" type="image/x-icon">
 </head>
 <body class="bg-dark bg-gradient" style="min-height: 100vh;">
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">香港差勤報表系統</a>
+        <a class="navbar-brand" href="#">東華電信差勤報表系統</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                {#                <li class="nav-item">#}
-                {#                    <a class="nav-link" href="#">首頁</a>#}
-                {#                </li>#}
-                {#                <li class="nav-item">#}
-                {#                    <a class="nav-link" href="#">關於</a>#}
-                {#                </li>#}
-                {#                <li class="nav-item">#}
-                {#                    <a class="nav-link" href="#">聯絡我們</a>#}
-                {#                </li>#}
-            </ul>
+            <!-- ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">首頁</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">關於</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">聯絡我們</a>
+                </li>
+            </ul -->
         </div>
     </div>
 </nav>
@@ -42,21 +43,16 @@
             <div class="card text-bg-dark mb-3">
                 <div class="card-body">
                     <h2 class="card-title text-center mb-4">登入</h2>
-{#                    <form action="">#}
-                        <div class="mb-3">
-                            <label for="email" class="form-label">電子郵件</label>
-                            <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">密碼</label>
-                            <input type="password" class="form-control" id="password">
-                        </div>
-                        <!-- div class="mb-3 form-check" -->
-                        <!-- input type="checkbox" class="form-check-input" id="rememberMe" -->
-                        <!-- label class="form-check-label" for="rememberMe">記住我</label -->
-                        <!-- /div -->
-                        <button type="submit" class="btn btn-primary w-100" id="login-btn" py-click="on_click()">登入</button>
-{#                    </form>#}
+                    <div class="mb-3">
+                        <label for="email" class="form-label">電子郵件</label>
+                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">密碼</label>
+                        <input type="password" class="form-control" id="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100" id="login-btn" py-click="on_click()">登入
+                    </button>
                     <div class="text-center mt-3">
                         <a href="#">忘記密碼？</a>
                     </div>
@@ -69,33 +65,30 @@
         </div>
     </div>
 </div>
-<py-config>
-    packages = ["requests"]
-</py-config>
 <py-script>
-    from pyodide.http import pyfetch
-    import asyncio
-    import json
-    from js import document, XMLHttpRequest
+        from pyodide.http import pyfetch
+        import asyncio
+        import json
+        from js import document, XMLHttpRequest
 
-    submit_btn = document.getElementById("login-btn")
-    post_url = "http://172.22.16.45:8000/hkleaveapp/"
+        submit_btn = document.getElementById("login-btn")
+        post_url = "http://192.168.1.112:8000/hkleaveapp/"
+        direct_url = "http://192.168.1.112:8000/hkleaveapp/report"
 
-    def on_click(*ags, **kws):
-        # post request (email and password)
-        email = document.getElementById("email").value
-        password = document.getElementById("password").value
-        data = {"email": email, "password": password}
-        data = json.dumps(data)
+        def on_click(*ags, **kws):
+            # post request (email and password)
+            email = document.getElementById("email").value
+            password = document.getElementById("password").value
+            data = {"email": email, "password": password}
+            data = json.dumps(data)
 
-        # post request
-        req = XMLHttpRequest.new()
-        req.open("POST", post_url, False)
-        req.setRequestHeader("Content-Type", "application/json")
-        req.send(data)
-        if req.status == 200:
-            document.location.href = "http://172.22.16.45:8000/hkleaveapp/report"
-
+            # post request
+            req = XMLHttpRequest.new()
+            req.open("POST", post_url, False)
+            req.setRequestHeader("Content-Type", "application/json")
+            req.send(data)
+            if req.status == 200:
+                document.location.href = direct_url
 </py-script>
 
 <!-- 引入Bootstrap 5 JS和jQuery -->

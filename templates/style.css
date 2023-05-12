@@ -2,3 +2,9 @@
 * {
   border: 1px solid greenyellow;
 }
+
+/* setting a tag <a> id called "confirm-button"'s text color is white */
+a#confirm-button {
+  color: white;
+}
+

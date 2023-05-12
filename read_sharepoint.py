@@ -14,7 +14,6 @@ def main1():
         "https://donghwatelecom.sharepoint.com/sites/LeaveApplication"
     ).with_credentials(user_credentials)
     list_title = "LeaveDB"
-    pprint(ctx.web.lists)
     list_to_export = ctx.web.lists.get_by_title(list_title)
     list_items = list_to_export.items.get().execute_query()
 
@@ -23,7 +22,7 @@ def main1():
         dict_list.append(item.properties)
 
     df = pd.DataFrame.from_records(dict_list)
-    df.to_excel("LeaveDB.xlsx", index=False)
+    df.to_excel("LeaveDB2.xlsx", index=False)
 
 
 def main2():
@@ -40,7 +39,7 @@ def main2():
         dict_list.append(item.properties)
 
     df = pd.DataFrame.from_records(dict_list)
-    df.to_excel("LeaveForm.xlsx", index=False)
+    df.to_excel("LeaveForm2.xlsx", index=False)
 
 
 def main3():
@@ -121,9 +120,9 @@ def read_attachment():
 
 if __name__ == "__main__":
     start_time = time.time()
-    # main1()
-    # main2()
+    main1()
+    main2()
     # main3()
     # download_attachment()
-    read_attachment()
+    # read_attachment()
     print("--- %s seconds ---" % (time.time() - start_time))

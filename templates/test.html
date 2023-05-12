@@ -1,28 +1,30 @@
-<html>
+<html lang="en">
+
 <head>
-    <title>Ice Cream Picker</title>
-    <meta charset="utf-8">
-    <!-- link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css"/ -->
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
+    <title>hk-leave-app</title>
 </head>
+
 <body>
-<py-config>
-    files = ["./on_click.py"]
-</py-config>
-<h1 id="Title">Test Page</h1>
-
-<!-- add btn -->
-<button id="add-btn" py-click="add_p()">Add</button>
-<p id="para"></p>
-<py-script>
-    from js import document
-    def add_p(*ags, **kws):
-        # append a new p tag
-        p = document.createElement("p")
-        p.innerHTML = "new p tag"
-        document.getElementById("para").appendChild(p)
-</py-script>
-
+<div>
+    <link id="bootstrap-css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <div class="container">
+        <div class="row">
+            <h2>Datetimepicker</h2><a
+                href="https://uxsolutions.github.io/bootstrap-datepicker/?markup=input&amp;format=&amp;weekStart=&amp;startDate=&amp;endDate=&amp;startView=0&amp;minViewMode=0&amp;maxViewMode=4&amp;todayBtn=false&amp;clearBtn=false&amp;language=en&amp;orientation=auto&amp;multidate=&amp;multidateSeparator=&amp;keyboardNavigation=on&amp;forceParse=on#sandbox">Design
+            by me</a>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <div id="datetimepicker1" class="input-group date"><input class="form-control" type="text"/><span
+                            class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+
 </html>
