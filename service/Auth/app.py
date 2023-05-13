@@ -25,7 +25,3 @@ async def loginFunc(request: Request):
     user_info = await request.json()
     pprint(user_info)
     return user_info
-
-@router.get("/report", response_class=HTMLResponse)
-async def reportPage(request: Request):
-    return templates.TemplateResponse("report.html", {"request": request})

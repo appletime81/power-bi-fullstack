@@ -14,3 +14,8 @@ templates = Jinja2Templates(directory="templates")
 
 
 router = APIRouter()
+
+
+@router.get("/report", response_class=HTMLResponse)
+async def reportPage(request: Request):
+    return templates.TemplateResponse("report.html", {"request": request})
