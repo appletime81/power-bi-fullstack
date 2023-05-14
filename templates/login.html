@@ -70,17 +70,18 @@
         from pyodide.http import pyfetch
         import asyncio
         import json
-        from js import document, XMLHttpRequest
+        from js import document, XMLHttpRequest, alert
 
         submit_btn = document.getElementById("login-btn")
-        post_url = "http://172.30.10.95:8000/hkleaveapp/"
-        direct_url = "http://172.30.10.95:8000/hkleaveapp/report"
+        root_url = "172.22.17.0"
+        post_url = f"http://{root_url}:8000/hkleaveapp/"
+        direct_url = f"http://{root_url}:8000/hkleaveapp/report"
 
         def on_click(*ags, **kws):
             # post request (email and password)
             email = document.getElementById("email").value
             password = document.getElementById("password").value
-            data = {"email": email, "password": password}
+            data = {"username": email, "password": password}
             data = json.dumps(data)
 
             # post request
@@ -88,8 +89,17 @@
             req.open("POST", post_url, False)
             req.setRequestHeader("Content-Type", "application/json")
             req.send(data)
-            if req.status == 200:
+            res = req.responseText
+            res = json.loads(res)
+            print(res.get("status_code"))
+            if res.get("access_token"):
+                # set access token
+                access_token = res["access_token"]
+                document.cookie = f"access_token={access_token};path=/"
+
+                # redirect to report page
                 document.location.href = direct_url
+
 </py-script>
 
 <!-- 引入Bootstrap 5 JS和jQuery -->

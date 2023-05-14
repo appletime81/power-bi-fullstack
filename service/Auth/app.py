@@ -1,12 +1,9 @@
 from jose import jwt, JWTError
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
-from pprint import pprint
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
-from fastapi import Depends, HTTPException, status, APIRouter, Request, Response, Form
-from starlette.responses import RedirectResponse
+from fastapi import HTTPException, APIRouter, Request
 
 
 templates = Jinja2Templates(directory="templates")
@@ -20,7 +17,7 @@ temp_users_info = {
     "users_info": [
         {
             "user_id": 30,
-            "username": "frank",
+            "username": "itrimsl8696@gmail.com",
             "hashedpassowrd": "$2b$12$N8jUJ1ZPlNNsXuF6vloy4.SPLXIJlTYcWVTpoHRRcsj.07.xN.dI6",
         }
     ]
@@ -35,9 +32,9 @@ def verify_password(plain_password, hashed_password):
     return bcrypt_context.verify(plain_password, hashed_password)
 
 
-def search_user(user_id: int):
+def search_user(username: str):
     for user in temp_users_info.get("users_info"):
-        if user.get("user_id") == user_id:
+        if user.get("username") == username:
             return user
     return False
 
@@ -55,23 +52,22 @@ def create_access_token(username: str, user_id: int, expires_delta: timedelta = 
 def decode_token(token):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user = search_user(payload.get("id"))
+        user = search_user(payload.get("sub"))
         if user:
             return user
         else:
-            return {"message": "user is not exist"}
+            return {"message": "JWTError"}
     except JWTError:
         return {"message": "JWTError"}
 
 
 def authenticate_user(username: str, password: str):
-    for user in temp_users_info.get("users_info"):
-        if user.get("username") == username:
-            if user.get("password") == password:
-                return user
-            else:
-                return {"message": "username or password is wrong"}
-    return {"message": "username or password is wrong"}
+    user = search_user(username)
+    if not user:
+        return False
+    if not verify_password(password, user.get("hashedpassowrd")):
+        return False
+    return user
 
 
 @router.get("/", response_class=HTMLResponse)
@@ -82,9 +78,22 @@ async def loginPage(request: Request):
 @router.post("/")
 async def loginFunc(request: Request):
     user_info = await request.json()
-    pprint(user_info)
-    return user_info
+    print(user_info)
+    user = authenticate_user(user_info.get("username"), user_info.get("password"))
+    print(user)
+    if user:
+        token_expires = timedelta(minutes=60)
+        token = create_access_token(
+            user.get("username"), user.get("user_id"), expires_delta=token_expires
+        )
+        return {"access_token": token}
+    else:
+        return HTTPException(status_code=403, detail="Incorrect username or password")
 
 
 if __name__ == "__main__":
-    print(verify_password("123456", "$2b$12$N8jUJ1ZPlNNsXuF6vloy4.SPLXIJlTYcWVTpoHRRcsj.07.xN.dI6"))
+    print(
+        verify_password(
+            "123456", "$2b$12$N8jUJ1ZPlNNsXuF6vloy4.SPLXIJlTYcWVTpoHRRcsj.07.xN.dI6"
+        )
+    )
