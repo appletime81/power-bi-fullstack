@@ -9,10 +9,12 @@ ALGORITHM = "HS256"
 
 username = "frank"
 userid = 30
-time_delta = timedelta(minutes=30)
-def create_access_token(username: str, user_id: int,
-                        expires_delta: Optional[timedelta] = None):
+time_delta = timedelta(seconds=30)
 
+
+def create_access_token(
+    username: str, user_id: int, expires_delta: Optional[timedelta] = None
+):
     encode = {"sub": username, "id": user_id}
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
@@ -20,8 +22,9 @@ def create_access_token(username: str, user_id: int,
         expire = datetime.utcnow() + timedelta(minutes=15)
     encode.update({"exp": expire})
     return jwt.encode(encode, SECRET_KEY, algorithm=ALGORITHM)
-def decode_token(token):
 
+
+def decode_token(token):
     if token is None:
         return None
     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
@@ -30,8 +33,8 @@ def decode_token(token):
     pprint(payload)
 
 
-encode_token = create_access_token(username, userid, time_delta)
-print(encode_token)
+# encode_token = create_access_token(username, userid, time_delta)
+# print(encode_token)
+encode_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmcmFuayIsImlkIjozMCwiZXhwIjoxNjg0MDMxNTA3fQ.pWdAn8YPbtm1UmHb8CKelpeuekpZvpT05AA0YpEYwss"
 
 decode_token(encode_token)
-

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css"/>
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
     <link rel="icon" href="https://web-eshop.cdn.hinet.net/eshop/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../static/leaveapp/css/style.css">
 </head>
 <body class="bg-dark bg-gradient" style="min-height: 100vh;">
 <!-- Navbar -->
@@ -72,8 +73,8 @@
         from js import document, XMLHttpRequest
 
         submit_btn = document.getElementById("login-btn")
-        post_url = "http://172.22.17.0:8000/hkleaveapp/"
-        direct_url = "http://172.22.17.0:8000/hkleaveapp/report"
+        post_url = "http://172.30.10.95:8000/hkleaveapp/"
+        direct_url = "http://172.30.10.95:8000/hkleaveapp/report"
 
         def on_click(*ags, **kws):
             # post request (email and password)
