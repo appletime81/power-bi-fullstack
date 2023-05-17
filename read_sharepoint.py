@@ -3,6 +3,9 @@ import time
 from pprint import pprint
 from office365.sharepoint.client_context import ClientContext
 from office365.runtime.auth.user_credential import UserCredential
+from office365.sharepoint.client_context import ClientContext
+from office365.sharepoint.files.file import File
+from office365.sharepoint.folders.folder import Folder
 
 USER_NAME = "ctchow@DONGHWATelecom.onmicrosoft.com"
 PASSWORD = "Vam44078Vam44078"
@@ -15,6 +18,7 @@ def main1():
     ).with_credentials(user_credentials)
     list_title = "LeaveDB"
     list_to_export = ctx.web.lists.get_by_title(list_title)
+    pprint(list_to_export.context)
     list_items = list_to_export.items.get().execute_query()
 
     dict_list = []
@@ -22,7 +26,7 @@ def main1():
         dict_list.append(item.properties)
 
     df = pd.DataFrame.from_records(dict_list)
-    df.to_excel("LeaveDB2.xlsx", index=False)
+    df.to_excel("LeaveDB3.xlsx", index=False)
 
 
 def main2():
@@ -49,6 +53,7 @@ def main3():
     ).with_credentials(user_credentials)
     list_title = "LeaveForm"
     list_to_export = ctx.web.lists.get_by_title(list_title)
+    print(list_to_export.context.base_url)
     list_items = list_to_export.items.get().execute_query()
 
     dict_list = []
@@ -119,10 +124,12 @@ def read_attachment():
 
 
 if __name__ == "__main__":
+    # LeaveForm URL: https://donghwatelecom.sharepoint.com/sites/LeaveApplication/Lists/LeaveForm/AllItems.aspx
+    # LeaveDB URL: https://donghwatelecom.sharepoint.com/sites/LeaveApplication/Lists/LeaveDB/AllItems.aspx
     start_time = time.time()
-    main1()
-    main2()
-    # main3()
+    # main1()
+    # main2()
+    main3()
     # download_attachment()
     # read_attachment()
     print("--- %s seconds ---" % (time.time() - start_time))
