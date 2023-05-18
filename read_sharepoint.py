@@ -45,7 +45,7 @@ def main2():
         dict_list.append(item.properties)
 
     df = pd.DataFrame.from_records(dict_list)
-    df.to_excel("LeaveForm.xlsx", index=False)
+    df.to_excel("LeaveForm2.xlsx", index=False)
 
 
 def main3():
