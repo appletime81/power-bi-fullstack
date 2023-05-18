@@ -7,8 +7,10 @@ from office365.sharepoint.client_context import ClientContext
 from office365.sharepoint.files.file import File
 from office365.sharepoint.folders.folder import Folder
 
-USER_NAME = "ctchow@DONGHWATelecom.onmicrosoft.com"
-PASSWORD = "Vam44078Vam44078"
+# USER_NAME = "ctchow@DONGHWATelecom.onmicrosoft.com"
+# PASSWORD = "Vam44078Vam44078"
+USER_NAME = "DONGHWA17@DONGHWATelecom.onmicrosoft.com"
+PASSWORD = "Vam1874Vam1874"
 
 
 def main1():
@@ -43,7 +45,7 @@ def main2():
         dict_list.append(item.properties)
 
     df = pd.DataFrame.from_records(dict_list)
-    df.to_excel("LeaveForm2.xlsx", index=False)
+    df.to_excel("LeaveForm.xlsx", index=False)
 
 
 def main3():
@@ -68,6 +70,25 @@ def main3():
     for item in update_item_list:
         item.set_property("EmpName", "處長2號").update().execute_query()
         print("Item has been updated")
+
+
+def main4():
+    user_credentials = UserCredential(USER_NAME, PASSWORD)
+    ctx = ClientContext(
+        "https://donghwatelecom.sharepoint.com/sites/LeaveApplication"
+    ).with_credentials(user_credentials)
+    list_title = "LeaveForm"
+    list_to_export = ctx.web.lists.get_by_title(list_title)
+    list_items = list_to_export.items.get().execute_query()
+
+    for item in list_items:
+        print(item.properties["Id"])
+        if item.properties["Id"] == 475:
+            print("Found")
+            list_to_export.get_item_by_id(
+                item.properties["Id"]
+            ).delete_object().execute_query()
+            print("Item has been deleted")
 
 
 def download_attachment():
@@ -128,8 +149,9 @@ if __name__ == "__main__":
     # LeaveDB URL: https://donghwatelecom.sharepoint.com/sites/LeaveApplication/Lists/LeaveDB/AllItems.aspx
     start_time = time.time()
     # main1()
-    # main2()
-    main3()
+    main2()
+    # main3()
+    # main4()
     # download_attachment()
     # read_attachment()
     print("--- %s seconds ---" % (time.time() - start_time))
