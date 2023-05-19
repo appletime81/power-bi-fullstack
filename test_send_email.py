@@ -1,35 +1,32 @@
-import adal
 import msal
 import requests
 import json
-from msal import ConfidentialClientApplication
 
-client_id = "4169274b-92fc-4d11-8e35-8114f16d287d"
-client_secret = "MBJ8Q~vUCPUdaTDGlTqAs.ency4FtKUG.8pnza2R"
-# 值: MBJ8Q~vUCPUdaTDGlTqAs.ency4FtKUG.8pnza2R
-# 秘密識別碼: 6551cc7f-243b-41e8-8919-0b0e4331be85
-SCOPES = ["Mail.Send"]
 
-def acquire_token_func():
-    authority_url = "https://login.microsoftonline.com/DONGHWATelecom.onmicrosoft.com"
-    auth_ctx = adal.AuthenticationContext(authority_url)
-    token = auth_ctx.acquire_token_with_client_credentials(
-        "https://graph.microsoft.com",
-        client_id,
-        client_secret,
+# Graph Python quick start
+# 值: OBC8Q~Z3fnCoR4~q9Wm6zcdpVrWVO9QiF8e2abAl
+# 秘密識別碼: 5fb9c3a3-3ad7-41e2-ab23-fe96346ec1da
+
+client_id = "5830434e-26b0-4e69-abf5-9e790dd5c15e"
+client_secret = "OBC8Q~Z3fnCoR4~q9Wm6zcdpVrWVO9QiF8e2abAl"
+
+
+def acquire_token_by_username_password():
+    authority_url = "https://login.microsoftonline.com/{0}".format(
+        "DONGHWATelecom.onmicrosoft.com"
     )
-    return token
+    app = msal.PublicClientApplication(authority=authority_url, client_id=client_id)
+    return app.acquire_token_by_username_password(
+        username="DONGHWA17@DONGHWATelecom.onmicrosoft.com",
+        password="Vam1874Vam1874",
+        scopes=["https://graph.microsoft.com/.default"],
+    )
 
 
-print(acquire_token_func())
+access_token = acquire_token_by_username_password().get("access_token")
 
 
-
-access_token = acquire_token_func()['accessToken']
-
-
-
-url = "https://graph.microsoft.com/v1.0/users/sendMail"
+url = "https://graph.microsoft.com/v1.0/me/sendMail"
 headers = {
     "Authorization": f"Bearer {access_token}",
     "Content-Type": "application/json",
@@ -91,9 +88,6 @@ HTML = """
 </html>
 """
 
-# print("-" * 25 + " HTML Content " + "-" * 25)
-# print(HTML)
-# print("-" * 25 + " HTML Content " + "-" * 25)
 
 payload = {
     "message": {
