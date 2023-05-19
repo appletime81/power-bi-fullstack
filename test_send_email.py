@@ -1,9 +1,35 @@
+import adal
+import msal
 import requests
 import json
+from msal import ConfidentialClientApplication
 
-access_token = "eyJ0eXAiOiJKV1QiLCJub25jZSI6IjBCUEhMX2VSMFZERjlqVnNmZHNLdFlpeWI4ZVVlR1dyR2pibkp3N3pESUUiLCJhbGciOiJSUzI1NiIsIng1dCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyIsImtpZCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTAwMDAtYzAwMC0wMDAwMDAwMDAwMDAiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81ZTFkNTQ0OC1jNDAwLTQwZmYtYmU4Mi03NDAyMzE0NDgxZWEvIiwiaWF0IjoxNjgzNzc0MTQwLCJuYmYiOjE2ODM3NzQxNDAsImV4cCI6MTY4Mzg2MDg0MCwiYWNjdCI6MCwiYWNyIjoiMSIsImFpbyI6IkFUUUF5LzhUQUFBQXBPQ0d6aEVYcmkwRVJhVHEzbXZZSnI5ZnJYOVM5VVkrbVdDaGhEL29ZZ1FZdnZFUnFmTks3UlNwK3ZXS0VNSFgiLCJhbXIiOlsicHdkIl0sImFwcF9kaXNwbGF5bmFtZSI6IkdyYXBoIEV4cGxvcmVyIiwiYXBwaWQiOiJkZThiYzhiNS1kOWY5LTQ4YjEtYThhZC1iNzQ4ZGE3MjUwNjQiLCJhcHBpZGFjciI6IjAiLCJpZHR5cCI6InVzZXIiLCJpcGFkZHIiOiIxMTQuNDQuMjAwLjYxIiwibmFtZSI6ImN0Y2hvdyIsIm9pZCI6ImQ4MzZmZTNiLWFkNDgtNGViNC1iODY2LTljYmQ4ZDgxODU2YSIsInBsYXRmIjoiMyIsInB1aWQiOiIxMDAzMjAwMTA1RDhBOUQ2IiwicmgiOiIwLkFYRUFTRlFkWGdERV8wQy1nblFDTVVTQjZnTUFBQUFBQUFBQXdBQUFBQUFBQUFCeEFNTS4iLCJzY3AiOiJvcGVuaWQgcHJvZmlsZSBVc2VyLlJlYWQgZW1haWwgTWFpbC5TZW5kIiwic2lnbmluX3N0YXRlIjpbImttc2kiXSwic3ViIjoieGRJd01LVHJ5ZlFPR0JscXBkQXJJYXhSZmd3bHRVMGdpTzFFS1NkRlBHNCIsInRlbmFudF9yZWdpb25fc2NvcGUiOiJBUyIsInRpZCI6IjVlMWQ1NDQ4LWM0MDAtNDBmZi1iZTgyLTc0MDIzMTQ0ODFlYSIsInVuaXF1ZV9uYW1lIjoiY3RjaG93QERPTkdIV0FUZWxlY29tLm9ubWljcm9zb2Z0LmNvbSIsInVwbiI6ImN0Y2hvd0BET05HSFdBVGVsZWNvbS5vbm1pY3Jvc29mdC5jb20iLCJ1dGkiOiJvZTVPM3dYM3RVdUoxMHVPYU5SRkFBIiwidmVyIjoiMS4wIiwid2lkcyI6WyJiNzlmYmY0ZC0zZWY5LTQ2ODktODE0My03NmIxOTRlODU1MDkiXSwieG1zX2NjIjpbIkNQMSJdLCJ4bXNfc3NtIjoiMSIsInhtc19zdCI6eyJzdWIiOiI4WGNvR0hJZFFfWW9xa3BMTzhvdFA4ZHBWc3A1WXNhSGZRMEdNM3VMNXg4In0sInhtc190Y2R0IjoxNjA4NTU3NjE3fQ.kcMtUnQMuch-u5L2jKxm1HAjbdso_efVxXqMcLQp4S5IpkJqmB6FkU6qGljGwkKW1V8Rk0yvi4hGV5azO3Iy4dYFc7KXMgpVAkL7-3kgmtUR73OxWRhZRvfA9ASL6b059Ogr1i-z7M0-RmnLzhBvAJCWvhAGDF7rDoBpeZNb_zKtcBT18raVSG-CQxYhCyawQlv31c_OkA87TsGtfeAZ0eRppFpDaJ2QA97T7hl-sECBJK7Ii18KfMLgRTpWaPACWfN-LoZ4ib1g0662oLMLzBjn7RGOaoFZvCwqUrQNwGNV9eDCtA8nEGlqsS8D3uFHylzfHhIV1hJUIMZsykyhrw"
+client_id = "4169274b-92fc-4d11-8e35-8114f16d287d"
+client_secret = "MBJ8Q~vUCPUdaTDGlTqAs.ency4FtKUG.8pnza2R"
+# 值: MBJ8Q~vUCPUdaTDGlTqAs.ency4FtKUG.8pnza2R
+# 秘密識別碼: 6551cc7f-243b-41e8-8919-0b0e4331be85
+SCOPES = ["Mail.Send"]
 
-url = "https://graph.microsoft.com/v1.0/me/sendMail"
+def acquire_token_func():
+    authority_url = "https://login.microsoftonline.com/DONGHWATelecom.onmicrosoft.com"
+    auth_ctx = adal.AuthenticationContext(authority_url)
+    token = auth_ctx.acquire_token_with_client_credentials(
+        "https://graph.microsoft.com",
+        client_id,
+        client_secret,
+    )
+    return token
+
+
+print(acquire_token_func())
+
+
+
+access_token = acquire_token_func()['accessToken']
+
+
+
+url = "https://graph.microsoft.com/v1.0/users/sendMail"
 headers = {
     "Authorization": f"Bearer {access_token}",
     "Content-Type": "application/json",
@@ -65,17 +91,20 @@ HTML = """
 </html>
 """
 
-print("-" * 25 + " HTML Content " + "-" * 25)
-print(HTML)
-print("-" * 25 + " HTML Content " + "-" * 25)
+# print("-" * 25 + " HTML Content " + "-" * 25)
+# print(HTML)
+# print("-" * 25 + " HTML Content " + "-" * 25)
 
 payload = {
     "message": {
         "subject": "Meet for lunch?",
         "body": {"contentType": "HTML", "content": HTML},
-        "toRecipients": [{"emailAddress": {"address": "ylc@cht.com.tw"}}],
+        "toRecipients": [{"emailAddress": {"address": "cht_frank@cht.com.tw"}}],
     }
 }
+
+# change sender email address
+# payload["message"]["from"] = {"emailAddress": {"address": "no-reply@DONGHWATelecom.onmicrosoft.com"}}
 
 response = requests.post(url, headers=headers, data=json.dumps(payload))
 
