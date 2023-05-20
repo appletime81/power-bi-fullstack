@@ -3,12 +3,20 @@ import requests
 import json
 
 
-# Graph Python quick start
+# Graph Python quick start(17)
 # 值: OBC8Q~Z3fnCoR4~q9Wm6zcdpVrWVO9QiF8e2abAl
 # 秘密識別碼: 5fb9c3a3-3ad7-41e2-ab23-fe96346ec1da
+# client id:　5830434e-26b0-4e69-abf5-9e790dd5c15e
 
-client_id = "5830434e-26b0-4e69-abf5-9e790dd5c15e"
-client_secret = "OBC8Q~Z3fnCoR4~q9Wm6zcdpVrWVO9QiF8e2abAl"
+# Graph Python quick start(18)
+# 值: 7VI8Q~Af.lJ5UAGYpOAcswQ64qwP~sJEZ0Bgyc~A
+# 秘密識別碼: 7fc50e54-0897-4166-b9ea-3484bd7e836c
+
+# client_id = "5830434e-26b0-4e69-abf5-9e790dd5c15e"
+# client_secret = "OBC8Q~Z3fnCoR4~q9Wm6zcdpVrWVO9QiF8e2abAl"
+
+client_id = "54a38d28-48af-4de4-aa91-97d286ffa831"
+client_secret = "z-x8Q~irrjQbLn8fO0zbz9Io8bkC0JLMHDvdTcy8"
 
 
 def acquire_token_by_username_password():
@@ -17,13 +25,24 @@ def acquire_token_by_username_password():
     )
     app = msal.PublicClientApplication(authority=authority_url, client_id=client_id)
     return app.acquire_token_by_username_password(
-        username="DONGHWA17@DONGHWATelecom.onmicrosoft.com",
-        password="Vam1874Vam1874",
+        username="DONGHWA18@DONGHWATelecom.onmicrosoft.com",
+        password="Vam1789Vam1789",
         scopes=["https://graph.microsoft.com/.default"],
     )
 
 
+def acquire_token_by_client_credentials():
+    authority_url = "https://login.microsoftonline.com/{0}".format(
+        "DONGHWATelecom.onmicrosoft.com"
+    )
+    app = msal.ConfidentialClientApplication(
+        authority=authority_url, client_id=client_id, client_credential=client_secret
+    )
+    return app.acquire_token_for_client(scopes=["https://graph.microsoft.com/.default"])
+
+
 access_token = acquire_token_by_username_password().get("access_token")
+print(access_token)
 
 
 url = "https://graph.microsoft.com/v1.0/me/sendMail"
